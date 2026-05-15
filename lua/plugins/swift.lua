@@ -76,11 +76,13 @@ return {
             },
           },
           root_dir = function(filename)
-            local util = require("lspconfig.util")
-            return util.root_pattern("buildServer.json")(filename)
-              or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-              or util.root_pattern("Package.swift")(filename)
-              or util.find_git_ancestor(filename)
+            return vim.fs.root(filename, {
+              "buildServer.json",
+              "*.xcodeproj",
+              "*.xcworkspace",
+              "Package.swift",
+              ".git",
+            })
           end,
         },
       },
